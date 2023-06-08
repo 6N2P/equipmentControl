@@ -1,0 +1,265 @@
+﻿<Window x:Class="EquipmentControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EquipmentControl"
+        mc:Ignorable="d"
+        
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        
+        Title="MainWindow" Height="450" Width="800"
+        
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="10"></WindowChrome>
+    </WindowChrome.WindowChrome>
+
+    <!--#region Приверстке закоментировать код -->
+    <Window.Resources>
+        <local:CustomLetterDayConverter x:Key="CustomLetterDayConverter"/>
+        <Style x:Key="CalendarDayButtonStyle" TargetType= "{x:Type CalendarDayButton}">
+            <Style.Triggers>
+                <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding Converter="{StaticResource CustomLetterDayConverter}">
+                            <Binding/>
+                            <Binding Path="DataContext.Dates" RelativeSource="{RelativeSource AncestorType=Calendar}"/>
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <Setter Property="Background" Value="#d47c7c"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <!--#endregion-->
+    
+    <Grid>
+        <Border Background="#a4acc4"
+                CornerRadius="10"
+                BorderBrush="#7884da"
+                BorderThickness="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                        <RowDefinition/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           Text="Помощник с таблицей приборов"
+                           Style="{StaticResource tb_light}"
+                           />
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="5,0">
+                    <Button x:Name="btn_Minimaze"
+                            Style="{StaticResource topButon}"                        
+                            Margin="2"
+                            Click="btn_Minimaze_Click">
+                        <Icon:PackIconMaterial Kind="CollapseAll" Width="15" Height="15"/>
+                    </Button>
+
+                    <Button x:Name="btn_Maximaize"
+                            Style="{StaticResource topButon}"
+                            Margin="2"
+                            Click="btn_Maximaize_Click"                            
+                            MouseDoubleClick="Window_MouseDoubleClick">
+                        <Icon:PackIconMaterial Kind="ExpandAll" Width="15" Height="15"/>
+                    </Button>
+
+                    <Button x:Name="btn_Close"
+                            Style="{StaticResource topButon}"                        
+                            Margin="2"                            
+                            Click="btn_Close_Click">
+                        <Icon:PackIconMaterial Kind="Close" Width="15" Height="15"/>
+                    </Button>
+                </StackPanel>
+                
+                <Button Grid.Column="1"
+                        Grid.Row="1"
+                        Panel.ZIndex="1"
+                        Width="110"
+                        Style="{StaticResource toolBarButton}"
+                        Margin="3"
+                        HorizontalAlignment="Center"                                             
+                        Content="Выбрать файл"
+                        Command="{Binding OpenFileComand}"/>
+                
+                <Border Grid.Column="1"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Background="#4c6cd4"
+                        CornerRadius="0">
+                   
+                </Border>
+              
+                <Border Grid.Column="1"
+                        Grid.Row="2"
+                        Grid.RowSpan="1"
+                        
+                        CornerRadius="0,0,0,5">
+                    
+                </Border>
+                
+                <TextBlock Grid.Row="1"
+                           Grid.Column="2"
+                           Text="{Binding DateNow, StringFormat='dd.MM.yyyy'}"
+                           Style="{StaticResource tb_light}"/>
+                <StackPanel Grid.Row="2"
+                            Grid.Column="1"
+                            Orientation="Vertical">
+
+                    <Border 
+                    Background="White"
+                                Width="180"
+                                Height="180"
+                                CornerRadius="20"
+                                Margin="5">
+                        <Calendar 
+                                  Background="Transparent"                              
+                                  VerticalAlignment="Center"                                  
+                                  HorizontalAlignment="Center"
+                                  BorderBrush="Transparent"
+                                  SelectionMode="MultipleRange"
+                                  CalendarDayButtonStyle="{DynamicResource CalendarDayButtonStyle}"
+                                  SelectedDate="{Binding Date}">
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectedDatesChanged">
+                                    <i:InvokeCommandAction Command="{Binding ClickDate}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Calendar>
+                    </Border>
+                </StackPanel>
+                <TabControl Grid.Column="2"
+                            Grid.Row="2"
+                            Margin="0">
+                    <TabItem Header="Ближайшие даты">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Кол-во приборов: "
+                                           VerticalAlignment="Center"/>
+                                
+                                <TextBlock Text="{Binding CountEquipmentCheckList}"                                           
+                                           VerticalAlignment="Center"/>
+                                
+                                <TextBlock Text="Диапозон месяцев: "
+                                           VerticalAlignment="Center"
+                                           Margin ="5,0,0,0"/>
+                                
+                                <TextBox Text="{Binding CountMons}"
+                                         Margin="5,0"
+                                         VerticalAlignment="Center"
+                                         Height="20"
+                                         Width="30"/>
+                                <Button Style="{StaticResource topButon}"                        
+                                        Margin="2"
+                                        Command="{Binding UpdateEquipmentCheckListCommand}">
+                                    <Icon:PackIconMaterial Kind="Update" Width="15" Height="15"/>
+                                </Button>
+                            </StackPanel>
+                            
+                            <DataGrid Grid.Row ="1"
+                                      ItemsSource="{Binding EquipmentCheckList}"
+                                      AutoGenerateColumns="False"
+                                      AlternatingRowBackground="#C2C9EF">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="auto" Header="Компания" Binding="{Binding NameCompany}"/>
+                                    <DataGridTextColumn Width="auto" Header="Адрес" Binding="{Binding Adres}"/>
+                                    <DataGridTextColumn Width="auto" Header="Прибор" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Width="auto" Header="Номер" Binding="{Binding Number}"/>
+                                    <DataGridTextColumn Width="auto" Header="Дата посл. пров-ки" Binding="{Binding DateOfLastVerification, StringFormat='dd.MM.yyyy'}"/>
+                                    <DataGridTextColumn Width="auto" Header="Дата след. пров-ки" Binding="{Binding DateOfNextVerification, StringFormat='dd.MM.yyyy'}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                    
+                    <TabItem Header="Окно поиска">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Кол-во приборов: "
+                                           VerticalAlignment="Center"/>
+
+                                <TextBlock Text="{Binding CountEquipmentSerchList}"                                           
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <DataGrid Grid.Row ="1"
+                                      ItemsSource="{Binding EquipmentsSerchList}"
+                                      AutoGenerateColumns="False"
+                                      AlternatingRowBackground="#C2C9EF">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="auto" Header="Компания" Binding="{Binding NameCompany}"/>
+                                    <DataGridTextColumn Width="auto" Header="Адрес" Binding="{Binding Adres}"/>
+                                    <DataGridTextColumn Width="auto" Header="Прибор" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Width="auto" Header="Номер" Binding="{Binding Number}"/>
+                                    <DataGridTextColumn Width="auto" Header="Дата посл. пров-ки" Binding="{Binding DateOfLastVerification, StringFormat='dd.MM.yyyy'}"/>
+                                    <DataGridTextColumn Width="auto" Header="Дата след. пров-ки" Binding="{Binding DateOfNextVerification, StringFormat='dd.MM.yyyy'}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Все приборы">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Кол-во приборов: "/>
+                                <TextBlock Text="{Binding CountAllequipments}"/>
+                            </StackPanel>
+                            
+                            <DataGrid Grid.Row="1"
+                                      ItemsSource="{Binding AllEqupments}"
+                                      AutoGenerateColumns="False"
+                                      AlternatingRowBackground="#C2C9EF">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Width="auto" Header="Компания" Binding="{Binding NameCompany}"/>
+                                    <DataGridTextColumn Width="auto" Header="Адрес" Binding="{Binding Adres}"/>
+                                    <DataGridTextColumn Width="auto" Header="Прибор" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Width="auto" Header="Номер" Binding="{Binding Number}"/>
+                                    <DataGridTextColumn Width="auto" Header="Дата посл. пров-ки" Binding="{Binding DateOfLastVerification, StringFormat='dd.MM.yyyy'}"/>
+                                    <DataGridTextColumn Width="auto" Header="Дата след. пров-ки" Binding="{Binding DateOfNextVerification, StringFormat='dd.MM.yyyy'}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+            
+            
+        </Border>
+    </Grid>
+</Window>
