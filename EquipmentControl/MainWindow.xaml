@@ -22,7 +22,7 @@
     </WindowChrome.WindowChrome>
 
     <!--#region Приверстке закоментировать код -->
-    <Window.Resources>
+    <!--<Window.Resources>
         <local:CustomLetterDayConverter x:Key="CustomLetterDayConverter"/>
         <Style x:Key="CalendarDayButtonStyle" TargetType= "{x:Type CalendarDayButton}">
             <Style.Triggers>
@@ -37,7 +37,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-    </Window.Resources>
+    </Window.Resources>-->
     <!--#endregion-->
     
     <Grid>
@@ -98,6 +98,7 @@
                         Margin="3"
                         HorizontalAlignment="Center"                                             
                         Content="Выбрать файл"
+                        
                         Command="{Binding OpenFileComand}"/>
                 
                 <Border Grid.Column="1"
@@ -165,6 +166,8 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
+                            
+                            
                             <TextBlock Text="Окно поиска"
                                        Grid.ColumnSpan="2"
                                        Style="{StaticResource tb_light}"/>
@@ -180,7 +183,8 @@
                                      Margin="5"
                                      HorizontalAlignment="Center"
                                      Width="85"
-                                     Text="{Binding SerchCompanyTB}"/>
+                                     Text="{Binding SerchCompanyTB}" 
+                                     KeyDown="TextBox_KeyDown"/>
                             
                             <TextBlock Grid.Column="0"
                                        Grid.Row="2"
@@ -193,7 +197,8 @@
                                      Margin="5"
                                      HorizontalAlignment="Center"
                                      Width="85"
-                                     Text="{Binding SerchAdresTB}"/>
+                                     Text="{Binding SerchAdresTB}"
+                                     KeyDown="TextBox_KeyDown"/>
                             
                             <TextBlock Grid.Column="0"
                                        Grid.Row="3"
@@ -206,7 +211,8 @@
                                      Margin="5"
                                      HorizontalAlignment="Center"
                                      Width="85"
-                                     Text="{Binding SerchhEquipmentTB}"/>
+                                     Text="{Binding SerchhEquipmentTB}"
+                                     KeyDown="TextBox_KeyDown"/>
                             
                             <TextBlock Grid.Column="0"
                                        Grid.Row="4"
@@ -219,24 +225,38 @@
                                      Margin="5"
                                      HorizontalAlignment="Center"
                                      Width="85"
-                                     Text="{Binding SerchNamberEquipmentTB}"/>
+                                     Text="{Binding SerchNamberEquipmentTB}"
+                                     KeyDown="TextBox_KeyDown"/>
 
-                            <Button Grid.Column="0"
+                            <Button x:Name="serchBT"
+                                    Grid.Column="0"
                                     Grid.Row="6"
-                                    Grid.ColumnSpan="2"
+                                    
                                     Style="{StaticResource toolBarButton}"                                    
                                     Height="20"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center"
                                     Content="Поиск"
-                                    Command="{Binding SerchButton}"/>
+                                    Panel.ZIndex="1"
+                                    
+                                    Command="{Binding SerchButton}"
+                                    IsDefault="True"/>
+                            
+                            <Button Grid.Column="1"
+                                    Grid.Row="5"
+                                    Style="{StaticResource toolBarButton}"
+                                        Height="20"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Content="Очистить"
+                                    Command="{Binding CleanSerchFildsCommand}"/>
                         </Grid>
                     </Border>
                 </StackPanel>
                 <TabControl Grid.Column="2"
                             Grid.Row="2"
                             Margin="0">
-                    <TabItem Header="Ближайшие даты">
+                    <!--<TabItem Header="Ближайшие даты">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
@@ -281,7 +301,7 @@
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
-                    </TabItem>
+                    </TabItem>-->
                     
                     <TabItem Header="Окно поиска">
                         <Grid>

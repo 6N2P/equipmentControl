@@ -57,6 +57,14 @@ namespace EquipmentControl
         {
             WindowState = WindowState.Normal;
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                this.serchBT.Focus();             
+            }
+        }
     }
     public class CustomLetterDayConverter : IMultiValueConverter
     {

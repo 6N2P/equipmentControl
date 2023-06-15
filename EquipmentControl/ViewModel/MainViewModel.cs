@@ -260,6 +260,19 @@ namespace EquipmentControl.ViewModel
                     }));
             }
         }
+
+        DelegateCommand _cleanSerchFildsCommand;
+        public DelegateCommand CleanSerchFildsCommand
+        {
+            get
+            {
+                return _cleanSerchFildsCommand ?? (
+                    _cleanSerchFildsCommand = new DelegateCommand(obj =>
+                    {
+                        ClearnField();
+                    }));
+            }
+        }
         #endregion Commands
 
         void OpenFile()
@@ -277,7 +290,7 @@ namespace EquipmentControl.ViewModel
                 AllEqupments = excelHandler.GetEquipmentFail(path);
 
                 EquipmentCheckList = UpdateEquipmentCheckList(equipments);
-
+                EquipmentsSerchList =  UpdateEquipmentCheckList(equipments);
                 GetDateNextVerification();
                
             }
@@ -372,7 +385,7 @@ namespace EquipmentControl.ViewModel
                     {
                         foreach (var equipment in serchEquipment)
                         {
-                            if(equipment.NameCompany.Contains(SerchCompanyTB))
+                            if( equipment.NameCompany.ToLower().Contains(SerchCompanyTB.ToLower()))
                             {
                                 serchEquipmentForCompany.Add(equipment);
                             }
@@ -384,7 +397,7 @@ namespace EquipmentControl.ViewModel
                     {
                         foreach (var equipment in serchEquipment)
                         {
-                            if (equipment.Adres.Contains(SerchAdresTB))
+                            if (equipment.Adres.ToLower().Contains(SerchAdresTB.ToLower()))
                             {
                                 serchEquipmentForAdres.Add(equipment);
                             }
@@ -396,7 +409,7 @@ namespace EquipmentControl.ViewModel
                     {
                         foreach (var equipment in serchEquipment)
                         {
-                            if (equipment.Name.Contains(SerchhEquipmentTB))
+                            if (equipment.Name.ToLower().Contains(SerchhEquipmentTB.ToLower()))
                             {
                                 serchEquipmentForName.Add(equipment);
                             }
@@ -424,10 +437,19 @@ namespace EquipmentControl.ViewModel
                 MessageBox.Show("Дата 'от' больше чем 'до'", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         bool CorectRengDate()
         {
             if (DateFrom < DateTo) return true;
             return false;
+        }
+
+        void ClearnField()
+        {
+            SerchCompanyTB = string.Empty;
+            SerchAdresTB = string.Empty;
+            SerchhEquipmentTB = string.Empty;
+            SerchNamberEquipmentTB = string.Empty;
         }
     }
 
