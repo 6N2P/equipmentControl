@@ -22,7 +22,7 @@
     </WindowChrome.WindowChrome>
 
     <!--#region Приверстке закоментировать код -->
-    <!--<Window.Resources>
+    <Window.Resources>
         <local:CustomLetterDayConverter x:Key="CustomLetterDayConverter"/>
         <Style x:Key="CalendarDayButtonStyle" TargetType= "{x:Type CalendarDayButton}">
             <Style.Triggers>
@@ -37,7 +37,7 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-    </Window.Resources>-->
+    </Window.Resources>
     <!--#endregion-->
     
     <Grid>
@@ -58,9 +58,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
+                <Image Source="logoVoTerm.png"
+                       Grid.Column="1"
+                       HorizontalAlignment="Left"
+                       Width="40"
+                       Height="40"/>
                 <TextBlock Grid.Column="1"
                            Grid.ColumnSpan="2"
-                           Text="Помощник с таблицей приборов"
+                           Text="Реестр приборов учета"
                            Style="{StaticResource tb_light}"
                            />
                 <StackPanel Grid.Column="2"

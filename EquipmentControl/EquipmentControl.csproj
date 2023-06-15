@@ -29,9 +29,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ProductName>Помщник с таблице приборов</ProductName>
+    <ProductName>Реестр приборов учета ВоТерм</ProductName>
     <PublisherName>IvanovSV</PublisherName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -69,7 +69,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo-96.ico</ApplicationIcon>
+    <ApplicationIcon>logoVoTerm2.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>503748FE87E041AE916613102AB0AF8325F5767A</ManifestCertificateThumbprint>
@@ -242,7 +242,13 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.3.3.2\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo-96.ico" />
+    <Resource Include="logoVoTerm.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logoVoTerm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logoVoTerm2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
