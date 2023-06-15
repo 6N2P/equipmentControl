@@ -9,7 +9,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         
-        Title="MainWindow" Height="460" Width="800"
+        Title="MainWindow" Height="460" Width="840"
         
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -134,8 +134,8 @@
                                 Background="White"
                                 Width="180"
                                 Height="180"
-                                CornerRadius="20"
-                                Margin="5">
+                                CornerRadius="10"
+                                Margin="5,10,5,0">
                         <Calendar 
                                   Background="Transparent"                              
                                   VerticalAlignment="Center"                                  
@@ -154,9 +154,9 @@
                     </Border>
                     <Border  Background="#4c6cd4"
                              Width="180"
-                             Height="185"
-                             CornerRadius="20"
-                             Margin="5">
+                          
+                             CornerRadius="10"
+                             Margin="5,20">
                         
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -170,11 +170,13 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition Height="5"/>
                             </Grid.RowDefinitions>
                             
                             
-                            <TextBlock Text="Окно поиска"
+                            <TextBlock Text="Поиск"
                                        Grid.ColumnSpan="2"
+                                       Margin="5"
                                        Style="{StaticResource tb_light}"/>
 
                             <TextBlock Grid.Column="0"
@@ -235,7 +237,7 @@
 
                             <Button x:Name="serchBT"
                                     Grid.Column="0"
-                                    Grid.Row="6"
+                                    Grid.Row="5"
                                     
                                     Style="{StaticResource toolBarButton}"                                    
                                     Height="20"

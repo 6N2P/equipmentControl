@@ -29,9 +29,9 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ProductName>Реестр приборов учета ВоТерм</ProductName>
-    <PublisherName>IvanovSV</PublisherName>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ProductName>Реестр приборов учета</ProductName>
+    <PublisherName>ВоТерм</PublisherName>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
