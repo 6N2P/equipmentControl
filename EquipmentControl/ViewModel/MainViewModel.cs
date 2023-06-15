@@ -255,13 +255,16 @@ namespace EquipmentControl.ViewModel
 
         void GetEquipmentFoDate()
         {
-            ObservableCollection<Equipment> equipmentFoDate = new ObservableCollection<Equipment>();
-
-            foreach(var eq in AllEqupments )
+            if (equipments != null)
             {
-                if (eq.DateOfNextVerification == Date) equipmentFoDate.Add(eq);
+                ObservableCollection<Equipment> equipmentFoDate = new ObservableCollection<Equipment>();
+
+                foreach (var eq in AllEqupments)
+                {
+                    if (eq.DateOfNextVerification == Date) equipmentFoDate.Add(eq);
+                }
+                EquipmentsSerchList = equipmentFoDate;
             }
-            EquipmentsSerchList = equipmentFoDate;
         }
     }
 

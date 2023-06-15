@@ -9,7 +9,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="460" Width="800"
         
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -125,7 +125,7 @@
                             Orientation="Vertical">
 
                     <Border 
-                    Background="White"
+                                Background="White"
                                 Width="180"
                                 Height="180"
                                 CornerRadius="20"
@@ -145,6 +145,85 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Calendar>
+                    </Border>
+                    <Border  Background="#4c6cd4"
+                             Width="180"
+                             Height="180"
+                             CornerRadius="20"
+                             Margin="5">
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="85"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="Окно поиска"
+                                       Grid.ColumnSpan="2"
+                                       Style="{StaticResource tb_light}"/>
+
+                            <TextBlock Grid.Column="0"
+                                       Grid.Row="1"
+                                       Text="Компания"
+                                       HorizontalAlignment="Right"
+                                       Style="{StaticResource tb_light}"/>
+                            
+                            <TextBox Grid.Column="1"
+                                     Grid.Row="1"
+                                     Margin="5"
+                                     HorizontalAlignment="Center"
+                                     Width="85"/>
+                            
+                            <TextBlock Grid.Column="0"
+                                       Grid.Row="2"
+                                       Text="Адрес"
+                                       HorizontalAlignment="Right"
+                                       Style="{StaticResource tb_light}"/>
+                            
+                            <TextBox Grid.Column="1"
+                                     Grid.Row="2"
+                                     Margin="5"
+                                     HorizontalAlignment="Center"
+                                     Width="85"/>
+                            
+                            <TextBlock Grid.Column="0"
+                                       Grid.Row="3"
+                                       Text="Прибор"
+                                       HorizontalAlignment="Right"
+                                       Style="{StaticResource tb_light}"/>
+
+                            <TextBox Grid.Column="1"
+                                     Grid.Row="3"
+                                     Margin="5"
+                                     HorizontalAlignment="Center"
+                                     Width="85"/>
+                            
+                            <TextBlock Grid.Column="0"
+                                       Grid.Row="4"
+                                       Text="№ прибора"
+                                       HorizontalAlignment="Right"
+                                       Style="{StaticResource tb_light}"/>
+
+                            <TextBox Grid.Column="1"
+                                     Grid.Row="4"
+                                     Margin="5"
+                                     HorizontalAlignment="Center"
+                                     Width="85"/>
+
+                            <Button Grid.Column="0"
+                                    Grid.Row="6"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource toolBarButton}"                                    
+                                    Height="20"
+                                    Content="Поиск"/>
+                        </Grid>
                     </Border>
                 </StackPanel>
                 <TabControl Grid.Column="2"
@@ -211,6 +290,14 @@
 
                                 <TextBlock Text="{Binding CountEquipmentSerchList}"                                           
                                            VerticalAlignment="Center"/>
+                                <TextBlock Text="от"
+                                           Margin="5,0,0,0"
+                                           VerticalAlignment="Center"/>
+                                <DatePicker Margin ="5,0"/>
+                                <TextBlock Text="до"
+                                           Margin="5,0,0,0"
+                                           VerticalAlignment="Center"/>
+                                <DatePicker Margin ="5,0"/>
                             </StackPanel>
 
                             <DataGrid Grid.Row ="1"
