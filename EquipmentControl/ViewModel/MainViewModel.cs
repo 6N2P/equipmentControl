@@ -12,6 +12,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Controls;
 
 namespace EquipmentControl.ViewModel
 {
@@ -31,6 +32,8 @@ namespace EquipmentControl.ViewModel
             DateNow = DateTime.Now;
             CountMons = 2;
             Date = DateTime.Now;
+            DateFrom = DateTime.Now;
+            DateTo = DateFrom.AddMonths(2);
         }
 
 
@@ -41,10 +44,16 @@ namespace EquipmentControl.ViewModel
         string path;
         DateTime dateNow;
         DateTime date;
+        DateTime dateFrom;
+        DateTime dateTo;
         int countAllequipments;
         int countEquipmentCheckList;
         int countEquipmentSerchList;
         int countMons;
+        string serchCompanyTB;
+        string serchAdresTB;
+        string serchEquipmentTB;
+        string serchNamberEquipmentTB;
 
 
         #region Property
@@ -102,6 +111,42 @@ namespace EquipmentControl.ViewModel
                 OnPropertyChanged("Path");
             }
         }
+        public string SerchCompanyTB
+        {
+            get => serchCompanyTB;
+            set
+            {
+                serchCompanyTB = value;
+                OnPropertyChanged("SerchCompanyTB");
+            }
+        }
+        public string SerchAdresTB
+        {
+            get => serchAdresTB;
+            set
+            {
+                serchAdresTB = value;
+                OnPropertyChanged("SerchAdresTB");
+            }
+        }
+        public string SerchhEquipmentTB
+        {
+            get => serchEquipmentTB;
+            set
+            {
+                serchEquipmentTB = value;
+                OnPropertyChanged("SerchhEquipmentTB");
+            }
+        }
+        public string SerchNamberEquipmentTB
+        {
+            get => serchNamberEquipmentTB;
+            set
+            {
+                serchNamberEquipmentTB = value;
+                OnPropertyChanged("SerchNamberEquipmentTB");
+            }
+        }
         public ObservableCollection<Equipment> EquipmentCheckList
         {
             get => equipmentCheckList;
@@ -145,6 +190,25 @@ namespace EquipmentControl.ViewModel
             }
         }
         public HashSet<DateTime> Dates { get; } = new HashSet<DateTime>();
+        public DateTime DateFrom
+        {
+            get => dateFrom;
+            set
+            {
+                dateFrom = value;
+                OnPropertyChanged("DateFrom");
+            }
+        }
+        public DateTime DateTo
+        {
+            get => dateTo;
+            set
+            {
+                dateTo = value;
+                OnPropertyChanged("DateTo");
+            }
+        }
+
         #endregion Property
 
         #region Commands
@@ -181,6 +245,18 @@ namespace EquipmentControl.ViewModel
                     (_clickDate = new DelegateCommand(obj =>
                     {
                         GetEquipmentFoDate();
+                    }));
+            }
+        }
+        DelegateCommand _serchButton;
+        public DelegateCommand SerchButton
+        {
+            get
+            {
+                return _serchButton ??
+                    (_serchButton = new DelegateCommand(obj =>
+                    {
+                        SerchForData();
                     }));
             }
         }
@@ -232,6 +308,7 @@ namespace EquipmentControl.ViewModel
 
             return updateEquipments;
         }
+
         void GetDateNextVerification()
         {
             if (Dates.Count > 0)  Dates.Clear();
@@ -265,6 +342,92 @@ namespace EquipmentControl.ViewModel
                 }
                 EquipmentsSerchList = equipmentFoDate;
             }
+        }
+
+        void SerchForData()
+        {
+            if (CorectRengDate())
+            {
+                if (equipments != null)
+                {
+                    ObservableCollection<Equipment> serchEquipment = new ObservableCollection<Equipment>();
+                    ObservableCollection<Equipment> serchEquipmentForDate = new ObservableCollection<Equipment>();
+                    ObservableCollection<Equipment> serchEquipmentForCompany = new ObservableCollection<Equipment>();
+                    ObservableCollection<Equipment> serchEquipmentForAdres = new ObservableCollection<Equipment>();
+                    ObservableCollection<Equipment> serchEquipmentForName = new ObservableCollection<Equipment>();
+                    ObservableCollection<Equipment> serchEquipmentForNumber = new ObservableCollection<Equipment>();
+
+
+                    foreach (var equipment in AllEqupments)
+                    {
+                        if(equipment.DateOfNextVerification >= DateFrom && equipment.DateOfNextVerification <= DateTo)
+                        {
+                            serchEquipmentForDate.Add(equipment);
+                        }
+                    }
+
+                    serchEquipment = serchEquipmentForDate;
+                    
+                    if (!string.IsNullOrEmpty(SerchCompanyTB))
+                    {
+                        foreach (var equipment in serchEquipment)
+                        {
+                            if(equipment.NameCompany.Contains(SerchCompanyTB))
+                            {
+                                serchEquipmentForCompany.Add(equipment);
+                            }
+                        }
+                        serchEquipment = serchEquipmentForCompany;
+                    }
+
+                    if (!string.IsNullOrEmpty(SerchAdresTB))
+                    {
+                        foreach (var equipment in serchEquipment)
+                        {
+                            if (equipment.Adres.Contains(SerchAdresTB))
+                            {
+                                serchEquipmentForAdres.Add(equipment);
+                            }
+                        }
+                        serchEquipment = serchEquipmentForAdres;
+                    }
+
+                    if (!string.IsNullOrEmpty(SerchhEquipmentTB))
+                    {
+                        foreach (var equipment in serchEquipment)
+                        {
+                            if (equipment.Name.Contains(SerchhEquipmentTB))
+                            {
+                                serchEquipmentForName.Add(equipment);
+                            }
+                        }
+                        serchEquipment = serchEquipmentForName;
+                    }
+
+                    if (!string.IsNullOrEmpty(SerchNamberEquipmentTB))
+                    {
+                        foreach(var equipment in serchEquipment)
+                        {
+                            if(equipment.Number.Contains(SerchNamberEquipmentTB))
+                            {
+                                serchEquipmentForNumber.Add(equipment);
+                            }
+                        }
+                        serchEquipment = serchEquipmentForNumber;
+                    }
+
+                    EquipmentsSerchList = serchEquipment;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Дата 'от' больше чем 'до'", "Внимание!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        bool CorectRengDate()
+        {
+            if (DateFrom < DateTo) return true;
+            return false;
         }
     }
 
